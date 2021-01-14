@@ -1,7 +1,3 @@
-# Pre-requisites
-
-- debian install gcp using apt
-
 # jose
 
 > Universal "JSON Web Almost Everything" - JWA, JWS, JWE, JWT, JWK with no dependencies using native crypto runtimes
