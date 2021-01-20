@@ -64,22 +64,13 @@ A continuously growing list of examples is available in the [tracker](https://gi
 
 ## JOSE Support Matrix
 
-| JWK Key Types | Supported | `kty` value | |
+| Key Types | Supported | `kty` value | |
 | -- | -- | -- | -- |
 | RSA | ✓ | RSA | |
 | Elliptic Curve | ✓ | EC | supported curves: P-256, secp256k1, P-384, P-521 |
 | Octet Key Pair | ✓ | OKP | supported subtypes: Ed25519, Ed448, X25519, X448 |
 | Octet sequence | ✓ | oct | |
 
-| Serialization | JWS Sign | JWS Verify | JWE Encrypt | JWE Decrypt |
-| -- | -- | -- | -- | -- |
-| Compact | ✓ | ✓ | ✓ | ✓ |
-| General JSON | ✓ | ✓ | ✕ | ✓ |
-| Flattened JSON | ✓ | ✓ | ✓ | ✓ |
-
-| JWT Sign | JWT Verify | JWT Encrypt | JWT Decrypt |
-| -- | -- | -- | -- |
-| ✓ | ✓ | ✓ | ✓ |
 
 | JWS Algorithms | Supported | |
 | -- | -- | -- |
@@ -90,7 +81,7 @@ A continuously growing list of examples is available in the [tracker](https://gi
 | HMAC with SHA-2 | ✓ | HS256, HS384, HS512 |
 | Unsecured JWS | ✓ | none |
 
-| JWE Key Management Algorithms | Supported | |
+| JWE Management Algorithms | Supported | |
 | -- | -- | -- |
 | AES | ✓ | A128KW, A192KW, A256KW |
 | AES GCM | ✓ | A128GCMKW, A192GCMKW, A256GCMKW |
@@ -100,7 +91,7 @@ A continuously growing list of examples is available in the [tracker](https://gi
 | PBES2 | ✓ | PBES2-HS256+A128KW, PBES2-HS384+A192KW, PBES2-HS512+A256KW |
 | ECDH-ES | ✓ | ECDH-ES, ECDH-ES+A128KW, ECDH-ES+A192KW, ECDH-ES+A256KW |
 
-| JWE Content Encryption Algorithms | Supported | |
+| Content Encryption Algorithms | Supported | |
 | -- | -- | -- |
 | AES GCM | ✓ | A128GCM, A192GCM, A256GCM |
 | AES CBC w/ HMAC | ✓ |  A128CBC-HS256, A192CBC-HS384, A256CBC-HS512 |
