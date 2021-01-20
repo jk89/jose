@@ -1,5 +1,5 @@
 {
-  "name": "jose-internals",
+  "name": "@dxe/runtime-independent-crypto-utilities",
   "version": "3.5.1",
   "description": "Common crypto internals for nodejs/browser with no dependencies",
   "keywords": [

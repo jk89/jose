@@ -1,68 +1,28 @@
-# jose
+# @dxe/runtime-independent-crypto-utilities
 
-> Universal "JSON Web Almost Everything" - JWA, JWS, JWE, JWT, JWK with no dependencies using native crypto runtimes
+> Native crypto runtime independent utilities
 
 ## Implemented specs & features
 
-The following specifications are implemented by `jose`
+The following specifications are implemented:
 
-- JSON Web Signature (JWS) - [RFC7515][spec-jws]
-- JSON Web Encryption (JWE) - [RFC7516][spec-jwe]
-- JSON Web Key (JWK) - [RFC7517][spec-jwk]
-- JSON Web Algorithms (JWA) - [RFC7518][spec-jwa]
-- JSON Web Token (JWT) - [RFC7519][spec-jwt]
-- JSON Web Key Thumbprint - [RFC7638][spec-thumbprint]
-- JWS Unencoded Payload Option - [RFC7797][spec-b64]
-- CFRG Elliptic Curve ECDH and Signatures - [RFC8037][spec-okp]
-- secp256k1 EC Key curve support - [JOSE Registrations for WebAuthn Algorithms][spec-secp256k1]
+- parseKeyToJWK,
+- parseJWKToKey,
+- digest,
+- timingSafeEqual,
+- checkCekLength,
+- sign,
+- verify,
+- encrypt,
+- decrypt,
+- fetch,
+- random,
+- encryptPbes2kw,
+- decryptPbes2kw,
 
-The test suite utilizes examples defined in [RFC7520][spec-cookbook] to confirm its JOSE
-implementation is correct.
 
-## Support
 
-If you or your business use `jose`, please consider becoming a [sponsor][support-sponsor] so I can continue maintaining it and adding new features carefree.
-
-## Install
-
-```console
-npm install jose@3
-```
-
-## Documentation
-
-- JSON Web Tokens (JWT)
-  - [Signing](docs/classes/_jwt_sign_.signjwt.md#readme)
-  - [Verification & Claims Set Validation](docs/functions/_jwt_verify_.jwtverify.md#readme)
-  - Encrypted JSON Web Tokens
-    - [Encryption](docs/classes/_jwt_encrypt_.encryptjwt.md#readme)
-    - [Decryption & Claims Set Validation](docs/functions/_jwt_decrypt_.jwtdecrypt.md#readme)
-- JSON Web Encryption (JWE)
-  - Encryption - [Compact](docs/classes/_jwe_compact_encrypt_.compactencrypt.md#readme), [Flattened](docs/classes/_jwe_flattened_encrypt_.flattenedencrypt.md#readme)
-  - Decryption - [Compact](docs/functions/_jwe_compact_decrypt_.compactdecrypt.md#readme), [Flattened](docs/functions/_jwe_flattened_decrypt_.flatteneddecrypt.md#readme), [General](docs/functions/_jwe_general_decrypt_.generaldecrypt.md#readme)
-- JSON Web Signature (JWS)
-  - Signing - [Compact](docs/classes/_jws_compact_sign_.compactsign.md#readme), [Flattened](docs/classes/_jws_flattened_sign_.flattenedsign.md#readme), [General](docs/classes/_jws_general_sign_.generalsign.md#readme)
-  - Verification - [Compact](docs/functions/_jws_compact_verify_.compactverify.md#readme), [Flattened](docs/functions/_jws_flattened_verify_.flattenedverify.md#readme), [General](docs/functions/_jws_general_verify_.generalverify.md#readme)
-- JSON Web Key (JWK)
-  - [Parsing (JWK to KeyLike)](docs/functions/_jwk_parse_.parsejwk.md#readme)
-  - [Conversion (KeyLike to JWK)](docs/functions/_jwk_from_key_like_.fromkeylike.md#readme)
-  - [Thumbprints](docs/functions/_jwk_thumbprint_.calculatethumbprint.md#readme)
-  - [EmbeddedJWK](docs/functions/_jwk_embedded_.embeddedjwk.md#readme)
-- JSON Web Key Set (JWKS)
-  - [Verify using a remote JWKSet](docs/functions/_jwks_remote_.createremotejwkset.md#readme)
-- Key Pair or Secret Generation
-  - [Asymmetric Key Pair Generation](docs/functions/_util_generate_key_pair_.generatekeypair.md#readme)
-  - [Symmetric Secret Generation](docs/functions/_util_generate_secret_.generatesecret.md#readme)
-- Utilities
-  - [Decoding Token's Protected Header](docs/functions/_util_decode_protected_header_.decodeprotectedheader.md#readme)
-- [Unsecured JWT](docs/classes/_jwt_unsecured_.unsecuredjwt.md#readme)
-- [JOSE Errors](docs/modules/_util_errors_.md)
-
-## Examples
-
-A continuously growing list of examples is available in the [tracker](https://github.com/panva/jose/issues?q=label%3Aexample+label%3Av3.x).
-
-## JOSE Support Matrix
+## Support Matrix
 
 | Key Types | Supported | `kty` value | |
 | -- | -- | -- | -- |
@@ -131,64 +91,16 @@ Legend:
 
 ## FAQ
 
-#### Supported Versions
-
-| Version | Bug Fixes 🐞 | New Features ⭐ |
-| ------- | --------- | -------- |
-| [3.x.x](https://github.com/panva/jose) | ✅ | ✅ |
-| [2.x.x](https://github.com/panva/jose/tree/v2.x) | ✅ until 2022-04-30 | ❌ |
-
-#### What is new in v3.x?
-
-- Revised API
-- No dependencies
-- Browser support (using [Web Cryptography API][webcrypto])
-- Promise-based API
-- experimental (non-blocking 🎉) Node.js libuv thread pool based runtime
-
-#### v2.x docs?
-
-[Here.](https://github.com/panva/jose/blob/v2.x/docs/README.md)
 
 #### Semver?
 
 **Yes.** All module's public API is subject to [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
-
-#### How is it different from [`jws`](https://github.com/brianloveswords/node-jws), [`jwa`](https://github.com/brianloveswords/node-jwa) or [`jsonwebtoken`](https://github.com/auth0/node-jsonwebtoken)?
-
-- it supports browser runtime
-- it supports encrypted JWTs (i.e. in JWE format)
-- supports secp256k1, Ed25519, Ed448, X25519, and X448
-- it supports JWK Key Format for all four key types (oct, RSA, EC and OKP)
-- it is exclusively using native platform Key object representations (CryptoKey and KeyObject)
-- there is JSON Web Encryption support
-- it supports the flattened JWS / JWE Serialization Syntaxes
-- it supports the "crit" member validations to make sure extensions are handled correctly
-
-#### How is it different from [`node-jose`](https://github.com/cisco/node-jose)?
-
-`node-jose` is also built to work in any javascript runtime, to be able to do that it packs a lot of
-polyfills and javascript implementation code in the form of
-[`node-forge`](https://github.com/digitalbazaar/forge), this significantly increases the footprint
-of the modules with dependencies that either aren't ever used or have native implementation available
-in the runtime already, those are often times faster and more reliable.
-
-- it has smaller module footprints as it does not bundle unnecessary polyfills
-- it does not bundle [`node-forge`](https://github.com/digitalbazaar/forge) fallbacks when crypto runtime is unavailable
-- supports secp256k1, Ed25519, Ed448, X25519, and X448
 
 #### Uint8Array?!
 
 - Whenever `Uint8Array` is a valid input, so is [`Buffer`](https://nodejs.org/api/buffer.html#buffer_buffer) since buffers are instances of Uint8Array.
 - Whenever `Uint8Array` is returned and you want a `Buffer` instead, use `Buffer.from(uint8array)`.
 
-#### Bundle Size, Package Size, Tree Shaking
-
-Yes the bundle size is on the larger side, that is because each module is actually published 
-multiple times so that it can remain truly without dependencies and be universal / isomorphic.
-
-Nevertheless, since each module can be required independently and is fully tree-shakeable, the
-install size should not be a cause for concern.
 
 #### Most types are "any"
 
@@ -215,23 +127,11 @@ npm uninstall @types/node
 npm install --save-dev @types/node
 ```
 
-#### "Cannot find module 'jose'"
-
-There's no "jose" root module. Each module is to be individually imported as explained in
-each individual module's documentation.
-
 #### "Module not found: Error: Can't resolve '...' in '...'"
 
 Use a supported Node.js runtime and make sure whatever tools you may use for transpiling the code also support the Subpath exports ("exports") feature.
 
 #### Why? Just. Why?
-
-I was using [`node-jose`][node-jose] for
-[`openid-client`](https://github.com/panva/node-openid-client) and
-[`oidc-provider`](https://github.com/panva/node-oidc-provider) and came to realize its shortcomings
-in terms of performance and API (not having well defined errors).
-
-&plus; this was an amazing opportunity to learn JOSE as a whole
 
 [documentation]: /docs/README.md
 [node-jose]: https://github.com/cisco/node-jose
