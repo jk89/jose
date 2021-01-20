@@ -1,5 +1,6 @@
 {
   "files": [
+    "../src/index.ts",
     "../src/lib/index.ts",
     "../src/lib/cek.ts",
     "../src/lib/check_key_type.ts",

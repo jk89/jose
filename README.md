@@ -150,3 +150,8 @@ Use a supported Node.js runtime and make sure whatever tools you may use for tra
 [webcrypto]: https://www.w3.org/TR/WebCryptoAPI/
 [nodewebcrypto]: https://nodejs.org/docs/latest-v15.x/api/webcrypto.html
 [caniuse]: https://caniuse.com/mdn-javascript_operators_await,async-functions,mdn-javascript_statements_for_await_of,cryptography,textencoder
+
+# ignore 
+    "!dist/types/runtime/*",
+    "!dist/types/lib/*",
+    "dist/types/lib/jwt_producer.d.ts"

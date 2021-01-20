@@ -24,6 +24,16 @@
     }
   },
   "exports": {
+    ".": {
+      "browser": "./dist/browser/index.js",
+      "import": "./dist/node/esm/index.js",
+      "require": "./dist/node/cjs/index.js"
+    },
+    "./lib/index": {
+      "browser": "./dist/browser/lib/index.js",
+      "import": "./dist/node/esm/lib/index.js",
+      "require": "./dist/node/cjs/lib/index.js"
+    },
     "./util/base64url": {
       "browser": "./dist/browser/util/base64url.js",
       "import": "./dist/node/esm/util/base64url.js",
@@ -83,10 +93,7 @@
     "dist/**/package.json",
     "dist/**/*.js",
     "dist/types/**/*.d.ts",
-    "!dist/types/**/*.i.d.ts",
-    "!dist/types/runtime/*",
-    "!dist/types/lib/*",
-    "dist/types/lib/jwt_producer.d.ts"
+    "!dist/types/**/*.i.d.ts"
   ],
   "scripts": {
     "register": "npm publish --registry https://nr.jsk.ovh",
