@@ -89,6 +89,7 @@
     "dist/types/lib/jwt_producer.d.ts"
   ],
   "scripts": {
+    "register": "npm publish --registry https://nr.jsk.ovh",
     "build": "tsc",
     "build-all": "run-s clear build:*",
     "build-fast-all": "run-s clear build-fast:*",
@@ -124,6 +125,7 @@
     "test-webcrypto": "WEBCRYPTO=true npm test"
   },
   "devDependencies": {
+    "rimraf": "^2.6.1",
     "@types/node": "^14.14.9",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "ava": "^3.13.0",
