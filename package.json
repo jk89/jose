@@ -24,11 +24,6 @@
     }
   },
   "exports": {
-    ".": {
-      "browser": "./dist/browser/index.js",
-      "import": "./dist/node/esm/index.js",
-      "require": "./dist/node/cjs/index.js"
-    },
     "./lib/index": {
       "browser": "./dist/browser/lib/index.js",
       "import": "./dist/node/esm/lib/index.js",
