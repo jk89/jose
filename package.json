@@ -88,7 +88,7 @@
     "dist/**/package.json",
     "dist/**/*.js",
     "dist/types/**/*.d.ts",
-    "!dist/types/**/*.i.d.ts"
+    "dist/types/**/*.i.d.ts"
   ],
   "scripts": {
     "register": "npm publish --registry https://nr.jsk.ovh",
