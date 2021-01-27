@@ -19,6 +19,7 @@ import encryptKeyManagement from './encrypt_key_management.js';
 import isDisjoint from './is_disjoint.js';
 import isObject from './is_object.js';
 import toEpoch from './epoch.js';
+import runtime from './runtime';
 
 export * from './buffer_utils.js';
 export * from './cek.js';
@@ -32,6 +33,7 @@ export * from '../runtime/webcrypto.js';
 export * from '../runtime/zlib.js';
 // export * from '../runtime/interfaces.js';
 export { 
+    runtime,
     toEpoch,
     isObject,
     isDisjoint,

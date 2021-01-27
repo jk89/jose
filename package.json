@@ -92,6 +92,8 @@
   ],
   "scripts": {
     "register": "npm publish --registry https://nr.jsk.ovh",
+    "unregister": "npm unpublish --force --registry https://nr.jsk.ovh",
+
     "build": "tsc",
     "build-all": "run-s clear build:*",
     "build-fast-all": "run-s clear build-fast:*",
