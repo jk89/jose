@@ -56,3 +56,6 @@ export {
     encryptPbes2kw,
     decryptPbes2kw,
 };
+
+
+export * from '../types';

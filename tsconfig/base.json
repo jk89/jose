@@ -14,6 +14,7 @@
     "../src/lib/encrypt_key_management.ts",
     "../src/lib/validate_algorithms.ts",
     "../src/util/base64url.ts",
+    "../src/util/base64.ts",
     "../src/util/errors.ts",
     "../src/util/generate_key_pair.ts",
     "../src/util/generate_secret.ts",

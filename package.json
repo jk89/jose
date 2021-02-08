@@ -34,6 +34,11 @@
       "import": "./dist/node/esm/util/base64url.js",
       "require": "./dist/node/cjs/util/base64url.js"
     },
+    "./util/base64": {
+      "browser": "./dist/browser/util/base64.js",
+      "import": "./dist/node/esm/util/base64.js",
+      "require": "./dist/node/cjs/util/base64.js"
+    },
     "./webcrypto/util/base64url": {
       "import": "./dist/node/webcrypto/esm/util/base64url.js",
       "require": "./dist/node/webcrypto/cjs/util/base64url.js"
