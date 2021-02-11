@@ -1,4 +1,6 @@
 
+/* eslint-disable @typescript-eslint/naming-convention */
+import type { KeyObject } from 'crypto'
 import digest from '../runtime/digest.js';
 import parseKeyToJWK from '../runtime/key_to_jwk.js';
 import parseJWKToKey from '../runtime/jwk_to_key.js';
@@ -21,6 +23,8 @@ import isObject from './is_object.js';
 import toEpoch from './epoch.js';
 import runtime from './env.js';
 
+
+
 export * from './buffer_utils.js';
 export * from './cek.js';
 
@@ -29,6 +33,7 @@ export * from '../runtime/aesgcmkw.js';
 export * from '../runtime/generate.js';
 export * from '../runtime/ecdhes.js';
 export * from '../runtime/base64url.js';
+export * from '../runtime/base64.js';
 export * from '../runtime/webcrypto.js';
 export * from '../runtime/zlib.js';
 // export * from '../runtime/interfaces.js';
@@ -58,16 +63,11 @@ export {
 };
 
 
-//// types
-
-/* eslint-disable @typescript-eslint/naming-convention */
-import type { KeyObject } from 'crypto'
-
 /**
  * JSON Web Key ([JWK](https://tools.ietf.org/html/rfc7517)).
  * "RSA", "EC", "OKP", and "oct" key types are supported.
  */
-export interface JWK {
+export interface DXEJWK {
     /**
      * JWK "alg" (Algorithm) Parameter.
      */
@@ -136,8 +136,8 @@ export interface JWK {
    * @param protectedHeader JWE or JWS Protected Header.
    * @param token The consumed JWE or JWS token.
    */
-  export interface GetKeyFunction<T, T2> {
-    (protectedHeader: T, token: T2): Promise<KeyLike>
+  export interface DXEGetKeyFunction<T, T2> {
+    (protectedHeader: T, token: T2): Promise<DXEKeyLike>
   }
   
   /**
@@ -153,13 +153,13 @@ export interface JWK {
    * is used exclusively for symmetric secret representations, a CryptoKey or KeyObject is
    * preferred, but in Web Crypto API this isn't an option for some algorithms.
    */
-  export type KeyLike = KeyObject | CryptoKey | Uint8Array
+  export type DXEKeyLike = KeyObject | CryptoKey | Uint8Array
   
   /**
    * Flattened JWS definition for verify function inputs, allows payload as
    * Uint8Array for detached signature validation.
    */
-  export interface FlattenedJWSInput {
+  export interface DXEFlattenedJWSInput {
     /**
      * The "header" member MUST be present and contain the value JWS
      * Unprotected Header when the JWS Unprotected Header value is non-
@@ -167,7 +167,7 @@ export interface JWK {
      * an unencoded JSON object, rather than as a string.  These Header
      * Parameter values are not integrity protected.
      */
-    header?: JWSHeaderParameters
+    header?: DXEJWSHeaderParameters
   
     /**
      * The "payload" member MUST be present and contain the value
@@ -195,7 +195,7 @@ export interface JWK {
    * General JWS definition for verify function inputs, allows payload as
    * Uint8Array for detached signature validation.
    */
-  export interface GeneralJWSInput {
+  export interface DXEGeneralJWSInput {
     /**
      * The "payload" member MUST be present and contain the value
      * BASE64URL(JWS Payload). When RFC7797 "b64": false is used
@@ -208,7 +208,7 @@ export interface JWK {
      * Each object represents a signature or MAC over the JWS Payload and
      * the JWS Protected Header.
      */
-    signatures: Omit<FlattenedJWSInput, 'payload'>[]
+    signatures: Omit<DXEFlattenedJWSInput, 'payload'>[]
   }
   
   /**
@@ -216,7 +216,7 @@ export interface JWK {
    * is not returned when JWS Unencoded Payload Option
    * [RFC7797](https://tools.ietf.org/html/rfc7797) is used.
    */
-  export interface FlattenedJWS extends Partial<FlattenedJWSInput> {
+  export interface DXEFlattenedJWS extends Partial<DXEFlattenedJWSInput> {
     payload?: string
     signature: string
   }
@@ -226,12 +226,12 @@ export interface JWK {
    * is not returned when JWS Unencoded Payload Option
    * [RFC7797](https://tools.ietf.org/html/rfc7797) is used.
    */
-  export interface GeneralJWS {
+  export interface DXEGeneralJWS {
     payload?: string
-    signatures: Omit<FlattenedJWSInput, 'payload'>[]
+    signatures: Omit<DXEFlattenedJWSInput, 'payload'>[]
   }
   
-  export interface JoseHeaderParameters {
+  export interface DXEJoseHeaderParameters {
     /**
      * "kid" (Key ID) Header Parameter.
      */
@@ -255,7 +255,7 @@ export interface JWK {
     /**
      * "jwk" (JSON Web Key) Header Parameter.
      */
-    jwk?: Pick<JWK, 'kty' | 'crv' | 'x' | 'y' | 'e' | 'n'>
+    jwk?: Pick<DXEJWK, 'kty' | 'crv' | 'x' | 'y' | 'e' | 'n'>
   
     /**
      * "typ" (Type) Header Parameter.
@@ -272,7 +272,7 @@ export interface JWK {
    * Recognized JWS Header Parameters, any other Header Members
    * may also be present.
    */
-  export interface JWSHeaderParameters extends JoseHeaderParameters {
+  export interface DXEJWSHeaderParameters extends DXEJoseHeaderParameters {
     /**
      * JWS "alg" (Algorithm) Header Parameter.
      */
@@ -299,10 +299,10 @@ export interface JWK {
   /**
    * Recognized JWE Key Management-related Header Parameters.
    */
-  export interface JWEKeyManagementHeaderParameters {
+  export interface DXEJWEKeyManagementHeaderParameters {
     apu?: Uint8Array
     apv?: Uint8Array
-    epk?: KeyLike
+    epk?: DXEKeyLike
     iv?: Uint8Array
     p2c?: number
     p2s?: Uint8Array
@@ -311,7 +311,7 @@ export interface JWK {
   /**
    * Flattened JWE definition.
    */
-  export interface FlattenedJWE {
+  export interface DXEFlattenedJWE {
     /**
      * The "aad" member MUST be present and contain the value
      * BASE64URL(JWE AAD)) when the JWE AAD value is non-empty;
@@ -342,7 +342,7 @@ export interface JWK {
      * rather than as a string.  These Header Parameter values are not
      * integrity protected.
      */
-    header?: JWEHeaderParameters
+    header?: DXEJWEHeaderParameters
   
     /**
      * The "iv" member MUST be present and contain the value
@@ -373,18 +373,18 @@ export interface JWK {
      * represented as an unencoded JSON object, rather than as a string.
      * These Header Parameter values are not integrity protected.
      */
-    unprotected?: JWEHeaderParameters
+    unprotected?: DXEJWEHeaderParameters
   }
   
-  export interface GeneralJWE extends Omit<FlattenedJWE, 'encrypted_key' | 'header'> {
-    recipients: Pick<FlattenedJWE, 'encrypted_key' | 'header'>[]
+  export interface DXEGeneralJWE extends Omit<DXEFlattenedJWE, 'encrypted_key' | 'header'> {
+    recipients: Pick<DXEFlattenedJWE, 'encrypted_key' | 'header'>[]
   }
   
   /**
    * Recognized JWE Header Parameters, any other Header members
    * may also be present.
    */
-  export interface JWEHeaderParameters extends JoseHeaderParameters {
+  export interface DXEJWEHeaderParameters extends DXEJoseHeaderParameters {
     /**
      * JWE "alg" (Algorithm) Header Parameter.
      */
@@ -414,7 +414,7 @@ export interface JWK {
   /**
    * Shared Interface with a "crit" property for all sign and verify operations.
    */
-  export interface CritOption {
+  export interface DXECritOption {
     /**
      * An object with keys representing recognized "crit" (Critical) Header Parameter
      * names. The value for those is either `true` or `false`. `true` when the
@@ -443,7 +443,7 @@ export interface JWK {
   /**
    * JWE Decryption options.
    */
-  export interface DecryptOptions extends CritOption {
+  export interface DXEDecryptOptions extends DXECritOption {
     /**
      * A list of accepted JWE "alg" (Algorithm) Header Parameter values.
      */
@@ -458,24 +458,24 @@ export interface JWK {
      * In a browser runtime you have to provide an implementation for Inflate Raw
      * when you expect JWEs with compressed plaintext.
      */
-    inflateRaw?: InflateFunction
+    inflateRaw?: DXEInflateFunction
   }
   
   /**
    * JWE Encryption options.
    */
-  export interface EncryptOptions extends CritOption {
+  export interface DXEEncryptOptions extends DXECritOption {
     /**
      * In a browser runtime you have to provide an implementation for Deflate Raw
      * when you will be producing JWEs with compressed plaintext.
      */
-    deflateRaw?: DeflateFunction
+    deflateRaw?: DXEDeflateFunction
   }
   
   /**
    * JWT Claims Set verification options.
    */
-  export interface JWTClaimVerificationOptions {
+  export interface DXEJWTClaimVerificationOptions {
     /**
      * Expected JWT "aud" (Audience) Claim value(s).
      */
@@ -517,7 +517,7 @@ export interface JWK {
   /**
    * JWS Verification options.
    */
-  export interface VerifyOptions extends CritOption {
+  export interface DXEVerifyOptions extends DXECritOption {
     /**
      * A list of accepted JWS "alg" (Algorithm) Header Parameter values.
      */
@@ -527,13 +527,13 @@ export interface JWK {
   /**
    * JWS Signing options.
    */
-  export interface SignOptions extends CritOption {}
+  export interface DXESignOptions extends DXECritOption {}
   
   /**
    * Recognized JWT Claims Set members, any other members
    * may also be present.
    */
-  export interface JWTPayload {
+  export interface DXEJWTPayload {
     /**
      * JWT Issuer - [RFC7519#section-4.1.1](https://tools.ietf.org/html/rfc7519#section-4.1.1).
      */
@@ -578,18 +578,18 @@ export interface JWK {
   /**
    * Deflate Raw implementation, e.g. promisified [zlib.deflateRaw](https://nodejs.org/api/zlib.html#zlib_zlib_deflateraw_buffer_options_callback).
    */
-  export interface DeflateFunction {
+  export interface DXEDeflateFunction {
     (input: Uint8Array): Promise<Uint8Array>
   }
   
   /**
    * Inflate Raw implementation, e.g. promisified [zlib.inflateRaw](https://nodejs.org/api/zlib.html#zlib_zlib_inflateraw_buffer_options_callback).
    */
-  export interface InflateFunction {
+  export interface DXEInflateFunction {
     (input: Uint8Array): Promise<Uint8Array>
   }
   
-  export interface FlattenedDecryptResult {
+  export interface DXEFlattenedDecryptResult {
     /**
      * JWE AAD.
      */
@@ -603,22 +603,22 @@ export interface JWK {
     /**
      * JWE Protected Header.
      */
-    protectedHeader?: JWEHeaderParameters
+    protectedHeader?: DXEJWEHeaderParameters
   
     /**
      * JWE Shared Unprotected Header.
      */
-    sharedUnprotectedHeader?: JWEHeaderParameters
+    sharedUnprotectedHeader?: DXEJWEHeaderParameters
   
     /**
      * JWE Per-Recipient Unprotected Header.
      */
-    unprotectedHeader?: JWEHeaderParameters
+    unprotectedHeader?: DXEJWEHeaderParameters
   }
   
-  export interface GeneralDecryptResult extends FlattenedDecryptResult {}
+  export interface DXEGeneralDecryptResult extends DXEFlattenedDecryptResult {}
   
-  export interface CompactDecryptResult {
+  export interface DXECompactDecryptResult {
     /**
      * Plaintext.
      */
@@ -627,10 +627,10 @@ export interface JWK {
     /**
      * JWE Protected Header.
      */
-    protectedHeader: JWEHeaderParameters
+    protectedHeader: DXEJWEHeaderParameters
   }
   
-  export interface FlattenedVerifyResult {
+  export interface DXEFlattenedVerifyResult {
     /**
      * JWS Payload.
      */
@@ -639,17 +639,17 @@ export interface JWK {
     /**
      * JWS Protected Header.
      */
-    protectedHeader?: JWSHeaderParameters
+    protectedHeader?: DXEJWSHeaderParameters
   
     /**
      * JWS Unprotected Header.
      */
-    unprotectedHeader?: JWSHeaderParameters
+    unprotectedHeader?: DXEJWSHeaderParameters
   }
   
-  export interface GeneralVerifyResult extends FlattenedVerifyResult {}
+  export interface DXEGeneralVerifyResult extends DXEFlattenedVerifyResult {}
   
-  export interface CompactVerifyResult {
+  export interface DXECompactVerifyResult {
     /**
      * JWS Payload.
      */
@@ -658,30 +658,30 @@ export interface JWK {
     /**
      * JWS Protected Header.
      */
-    protectedHeader: JWSHeaderParameters
+    protectedHeader: DXEJWSHeaderParameters
   }
   
-  export interface JWTVerifyResult {
+  export interface DXEJWTVerifyResult {
     /**
      * JWT Claims Set.
      */
-    payload: JWTPayload
+    payload: DXEJWTPayload
   
     /**
      * JWS Protected Header.
      */
-    protectedHeader: JWSHeaderParameters
+    protectedHeader: DXEJWSHeaderParameters
   }
   
-  export interface JWTDecryptResult {
+  export interface DXEJWTDecryptResult {
     /**
      * JWT Claims Set.
      */
-    payload: JWTPayload
+    payload: DXEJWTPayload
   
     /**
      * JWE Protected Header.
      */
-    protectedHeader: JWEHeaderParameters
+    protectedHeader: DXEJWEHeaderParameters
   }
   
